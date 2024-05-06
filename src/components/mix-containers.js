@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const MixContainer = () => {
+const MixContainer = ({ title, image }) => {
   return (
     <View style={styles.outerContainer}>
-      <Text>MixContainer</Text>
+      <ImageBackground
+        source={{
+          uri: image,
+        }}
+        resizeMode="cover"
+        borderRadius={20}
+      >
+        <Text style={styles.titleText}>{title}</Text>
+      </ImageBackground>
     </View>
   );
 };
@@ -15,9 +23,15 @@ const styles = StyleSheet.create({
   outerContainer: {
     height: 160,
     width: 143,
-    borderWidth: 1,
-    borderColor: "blue",
-    borderRadius: 30,
-    alignItems: "center",
+  },
+  titleText: {
+    height: "100%",
+    color: "white",
+    fontSize: 18,
+    textAlign: "center",
+    borderRadius: 20,
+    backgroundColor: "#000000c0",
+    padding: 5,
+    textAlignVertical: "center",
   },
 });

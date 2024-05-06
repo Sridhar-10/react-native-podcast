@@ -1,0 +1,8 @@
+{
+  "files.readonlyInclude": {
+    "*node_modules": true
+  },
+  "search.exclude": {
+    "**/node_modules": false
+  }
+}

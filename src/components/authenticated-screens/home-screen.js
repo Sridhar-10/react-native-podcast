@@ -1,10 +1,10 @@
-import { FlatList, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import SvgUri from "react-native-svg-uri";
+import { FlatList, StyleSheet, Text, View, Image } from "react-native";
 import MixContainer from "../mix-containers";
 import DailyMixContainer from "../daily-mix-container";
-const mixData = require("../../data/mix-list.json");
-const dailyMix = require("../../data/daily-mix.json");
+import mixData from "../../data/mix-list.json";
+import dailyMix from "../../data/daily-mix.json";
+import FilterIcon from "../../../assets/filter.png";
 
 const HomeScreen = () => {
   return (
@@ -12,70 +12,47 @@ const HomeScreen = () => {
       <View style={styles.cardsContainer}>
         <FlatList
           data={mixData["mix-list"]}
-          renderItem={({ item }) => {
-            return <MixContainer title={item.title} image={item.image} />;
-          }}
+          renderItem={({ item }) => (
+            <MixContainer title={item.title} image={item.image} />
+          )}
           keyExtractor={(item) => item.id}
           horizontal
-          ItemSeparatorComponent={<View style={{ marginLeft: 20 }}></View>}
+          ItemSeparatorComponent={() => <View style={{ marginLeft: 20 }} />}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 20,
-          }}
+          contentContainerStyle={styles.mixListContent}
         />
       </View>
-
       <View style={styles.dailyMixTitleContainer}>
-        <View>
-          <Text style={{ color: "#77717D", fontSize: 36, fontWeight: "200" }}>
-            Your
-          </Text>
-          <Text style={{ color: "#0D0E10", fontSize: 36, fontWeight: "200" }}>
-            Daily{" "}
-            <Text
-              style={{ color: "#0D0E10", fontSize: 36, fontWeight: "bold" }}
-            >
-              Mixes
-            </Text>
-          </Text>
-        </View>
+        <Text style={[styles.mixTitle, styles.bold]}>
+          Your{"\n"}Daily <Text style={styles.bold}>Mixes</Text>
+        </Text>
         <View style={styles.filterContainer}>
-          <Image
-            source={require("../../../assets/filter.png")}
-            style={{ height: 21, width: 21 }}
-          />
+          <Image source={FilterIcon} style={styles.filterIcon} />
         </View>
       </View>
-      <View style={{ flex: 4 }}>
+
+      <View style={styles.dailyMixContainer}>
         <FlatList
           data={dailyMix["daily-mix"]}
-          renderItem={({ item }) => {
-            return (
-              <DailyMixContainer
-                title={item.title}
-                ImageSrc={item.image}
-                publisher={item.publisher}
-              />
-            );
-          }}
+          renderItem={({ item }) => (
+            <DailyMixContainer
+              title={item.title}
+              ImageSrc={item.image}
+              publisher={item.publisher}
+            />
+          )}
           keyExtractor={(item) => item.id}
           horizontal
-          ItemSeparatorComponent={<View style={{ marginLeft: 2 }}></View>}
+          ItemSeparatorComponent={() => (
+            <View style={{ marginHorizontal: 2 }} />
+          )}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: 10,
-          }}
+          contentContainerStyle={styles.dailyMixListContent}
         />
       </View>
     </View>
   );
 };
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -85,16 +62,28 @@ const styles = StyleSheet.create({
     flex: 2,
     padding: 4,
   },
+  mixListContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
   dailyMixTitleContainer: {
     flex: 1,
-    marginLeft: 30,
-    marginBottom: 5,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginHorizontal: 20,
+    marginBottom: 5,
+  },
+  mixTitle: {
+    color: "#0D0E10",
+    fontSize: 36,
+    fontWeight: "200",
+  },
+  bold: {
+    fontWeight: "bold",
   },
   filterContainer: {
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     height: 62,
@@ -102,4 +91,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8F8",
     borderRadius: 20,
   },
+  filterIcon: {
+    height: 21,
+    width: 21,
+  },
+  dailyMixContainer: {
+    flex: 4,
+    paddingRight: 20,
+  },
+  dailyMixListContent: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
 });
+
+export default HomeScreen;

@@ -1,4 +1,3 @@
-import { Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../components/authenticated-screens/home-screen";
@@ -87,8 +86,6 @@ const MainRoute = () => {
 };
 
 export default MainRoute;
-
-const styles = StyleSheet.create({});
 
 // function DownloadButton() {
 //   return (

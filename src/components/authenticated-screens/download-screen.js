@@ -1,86 +1,80 @@
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import PodcastList from "../podcast-list";
-const downloads = require("../../data/downloads.json");
+import downloads from "../../data/downloads.json";
+import FilterIcon from "../../../assets/filter.png";
 
 const DownloadScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.dailyMixTitleContainer}>
-        <View>
-          <Text style={{ color: "#77717D", fontSize: 36, fontWeight: "200" }}>
-            Your
-          </Text>
-          <Text style={{ color: "#0D0E10", fontSize: 36, fontWeight: "200" }}>
-            Downloads and{" "}
-            <Text
-              style={{ color: "#0D0E10", fontSize: 36, fontWeight: "bold" }}
-            >
-              Mixes
-            </Text>
-          </Text>
-        </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>
+          Your{"\n"}
+          <Text style={[styles.titleText, styles.boldTitle]}>Downloads</Text>
+        </Text>
         <View style={styles.filterContainer}>
-          <Image
-            source={require("../../../assets/filter.png")}
-            style={{ height: 21, width: 21 }}
-          />
+          <Image source={FilterIcon} style={styles.filterIcon} />
         </View>
       </View>
       <FlatList
-        data={downloads["downloads"]}
-        renderItem={({ item }) => {
-          return (
-            <PodcastList
-              image={item?.image}
-              title={item?.title}
-              publisher={item?.publisher}
-            />
-          );
-        }}
+        data={downloads.downloads}
+        renderItem={({ item }) => (
+          <PodcastList
+            image={item.image}
+            title={item.title}
+            publisher={item.publisher}
+          />
+        )}
         keyExtractor={(item) => item.id}
-        ItemSeparatorComponent={
-          <View
-            style={{
-              marginBottom: 20,
-              borderBottomWidth: 1,
-              borderBottomColor: "#D3D3D3",
-              marginVertical: 10,
-            }}
-          ></View>
-        }
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          padding: 10,
-        }}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );
 };
 
-export default DownloadScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
+    paddingHorizontal: 20,
   },
-
-  dailyMixTitleContainer: {
-    marginLeft: 30,
-    marginBottom: 20,
-    marginTop: 10,
+  titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginVertical: 20,
+  },
+  titleText: {
+    fontSize: 36,
+    color: "#0D0E10",
+    fontWeight: "200",
+    width: "93%",
+  },
+  boldTitle: {
+    fontWeight: "bold",
+  },
+  filterIcon: {
+    height: 20,
+    width: 20,
   },
   filterContainer: {
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    height: 62,
-    width: 52,
+    height: 60,
+    width: 50,
     backgroundColor: "#F8F8F8",
     borderRadius: 20,
   },
+  separator: {
+    marginVertical: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#D3D3D3",
+  },
+  listContent: {
+    paddingVertical: 10,
+  },
 });
+
+export default DownloadScreen;
